@@ -46,7 +46,6 @@ if lock_existe():
 
     exit()
 
-
 criar_lock()
 
 try:
@@ -60,6 +59,7 @@ try:
     grupos = carregar_grupos()
 
     total_grupos = 0
+    total_erros = 0
 
     for _, grupo in grupos.iterrows():
 
@@ -69,6 +69,7 @@ try:
 
             print()
             print("=" * 80)
+
             print(
                 f"Processando Grupo {cd_grupo}"
             )
@@ -114,7 +115,7 @@ try:
             )
 
             assunto = (
-                f"[DEV] Relatório Operacional"
+                f"[DEV] Relatório Operacional "
                 f"- Grupo {cd_grupo} "
                 f"- {datetime.now():%d/%m/%Y}"
             )
@@ -123,7 +124,7 @@ try:
             # DEV
             #
             to = [
-                    "empresa@destino.com.br"
+                "empresa@destino.com.br"
             ]
 
             cc = []
@@ -151,6 +152,8 @@ try:
                 f"Erro Grupo {cd_grupo}: {erro}"
             )
 
+            total_erros += 1
+
     escrever_log(
         f"Grupos Processados: {total_grupos}"
     )
@@ -160,35 +163,54 @@ try:
     )
 
     escrever_log("=" * 60)
-    
+
+    #
+    # Define o status final da execução
+    #
+    status_execucao = "SUCESSO"
+
+    if total_grupos > 0 and total_erros > 0:
+
+        status_execucao = "SUCESSO_PARCIAL"
+
+    elif total_grupos == 0 and total_erros > 0:
+
+        status_execucao = "FALHA"
+
     salvar_execucao(
-    {
-        "data_execucao":
-            datetime.now().strftime(
-                "%Y-%m-%d %H:%M:%S"
-            ),
+        {
+            "data_execucao":
+                datetime.now().strftime(
+                    "%Y-%m-%d %H:%M:%S"
+                ),
 
-        "grupos_processados":
-            total_grupos,
+            "grupos_processados":
+                total_grupos,
 
-        "duracao_segundos":
-            int(
-                (
-                    datetime.now()
-                    -
-                    inicio_execucao
-                ).total_seconds()
-            ),
+            "duracao_segundos":
+                int(
+                    (
+                        datetime.now()
+                        -
+                        inicio_execucao
+                    ).total_seconds()
+                ),
 
-        "status":
-            "SUCESSO"
-    }
+            "status":
+                status_execucao
+        }
     )
+
     print()
 
     print(
         f"✅ Grupos processados: "
         f"{total_grupos}"
+    )
+
+    print(
+        f"✅ Status final: "
+        f"{status_execucao}"
     )
 
     print(

@@ -16,5 +16,17 @@
         "grupos_processados": 17,
         "duracao_segundos": 57,
         "status": "SUCESSO"
+    },
+    {
+        "data_execucao": "2026-10-29 17:02:45",
+        "grupos_processados": 0,
+        "duracao_segundos": 3,
+        "status": "FALHA"
+    },
+    {
+        "data_execucao": "2026-10-29 17:11:29",
+        "grupos_processados": 0,
+        "duracao_segundos": 2,
+        "status": "FALHA"
     }
 ]
