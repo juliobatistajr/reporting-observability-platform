@@ -1,23 +1,24 @@
 SELECT
-       pi.ds_convenio                                                   AS convenio,
-       pi.ds_setor_atendimento                                          AS setor,
-       pi.nm_paciente                                                   AS paciente,
-       pi.nr_prontuario                                                 AS prontuario,
-       pi.nr_atendimento                                                AS atendimento,
-       pi.dt_entrada                                                    AS data_atendimento,
-       pi.cd_usuario_convenio                                           AS matricula,
-       pi.nm_medico                                                     AS medico,
-       pi.ds_unidade                                                    AS leito
 
-FROM paciente_internado_v pi
+       e.entity_group                    AS grupo,
+       e.department_name                 AS departamento,
+       e.entity_name                     AS nome,
+       e.record_number                   AS registro,
+       e.transaction_id                  AS transacao,
+       e.start_date                      AS data_inicio,
+       e.external_reference              AS referencia_externa,
+       e.responsible_person              AS responsavel,
+       e.location_name                   AS localizacao
 
-LEFT JOIN pessoa_fisica pf
-       ON pf.cd_pessoa_fisica = pi.cd_pessoa_fisica
+FROM vw_active_entities e
 
-WHERE pi.cd_estabelecimento = 5
-  AND pi.dt_alta IS NULL
+LEFT JOIN entity_details d
+       ON d.entity_id = e.entity_id
+
+WHERE e.organization_id = 1
+  AND e.end_date IS NULL
 
 ORDER BY
-       pi.ds_convenio,
-       pi.ds_setor_atendimento,
-       pi.nm_paciente
+       e.entity_group,
+       e.department_name,
+       e.entity_name;

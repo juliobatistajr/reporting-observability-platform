@@ -1,41 +1,42 @@
 SELECT
-       pi.ds_convenio                                                   AS convenio,
-       pi.ds_setor_atendimento                                          AS setor,
-       pi.nm_paciente                                                   AS paciente,
-       pi.nr_prontuario                                                 AS prontuario,
-       pi.nr_atendimento                                                AS atendimento,
-       pi.dt_entrada                                                    AS data_atendimento,
-       pi.dt_alta                                                       AS data_alta,
-       pi.cd_usuario_convenio                                           AS matricula,
 
-       substr(
-            pi.nm_medico
+       e.entity_group                    AS grupo,
+       e.department_name                 AS departamento,
+       e.entity_name                     AS nome,
+       e.record_number                   AS registro,
+       e.transaction_id                  AS transacao,
+       e.start_date                      AS data_inicio,
+       e.end_date                        AS data_fim,
+       e.external_reference              AS referencia_externa,
+
+       SUBSTR(
+            e.responsible_person
             || ' / '
-            || obter_especialidade_medico(
-                    pi.cd_medico_resp,
-                    'D'
+            || fn_responsible_area(
+                    e.responsible_id,
+                    'A'
                ),
             1,
             200
-       )                                                                AS medico_especialidade,
+       )                                 AS responsavel_area,
 
-       ma.ds_motivo_alta                                                AS tipo_alta,
+       s.status_description              AS status_final,
 
-       pi.ds_unidade                                                    AS leito
+       e.location_name                   AS localizacao
 
-FROM paciente_internado_v pi
+FROM vw_active_entities e
 
-LEFT JOIN pessoa_fisica pf
-       ON pf.cd_pessoa_fisica = pi.cd_pessoa_fisica
+LEFT JOIN entity_details d
+       ON d.entity_id = e.entity_id
 
-LEFT JOIN motivo_alta ma
-       ON ma.cd_motivo_alta = pi.cd_motivo_alta
+LEFT JOIN entity_status s
+       ON s.status_id = e.status_id
 
-WHERE pi.cd_estabelecimento = 5
-       AND pi.dt_alta >= TRUNC(SYSDATE)
-       AND pi.dt_alta <= SYSDATE
+WHERE e.organization_id = 1
+  AND e.end_date >= CURRENT_DATE
+  AND e.end_date <= CURRENT_DATE
 
 ORDER BY
-       pi.ds_convenio,
-       pi.ds_setor_atendimento,
-       pi.nm_paciente
+       e.entity_group,
+       e.department_name,
+       e.entity_name;
