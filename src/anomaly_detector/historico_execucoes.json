@@ -1,0 +1,20 @@
+[
+    {
+        "data_execucao": "2026-10-28 16:56:23",
+        "grupos_processados": 17,
+        "duracao_segundos": 57,
+        "status": "SUCESSO"
+    },
+    {
+        "data_execucao": "2026-10-29 09:01:07",
+        "grupos_processados": 17,
+        "duracao_segundos": 58,
+        "status": "SUCESSO"
+    },
+    {
+        "data_execucao": "2026-10-29 11:28:11",
+        "grupos_processados": 17,
+        "duracao_segundos": 57,
+        "status": "SUCESSO"
+    }
+]

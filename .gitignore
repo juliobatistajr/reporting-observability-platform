@@ -1,0 +1,24 @@
+# Credenciais
+.env
+
+# Configuração local
+config/CONVENIOS_EMAIL.xlsx
+
+# Ambiente virtual
+.venv/
+
+# Cache Python
+__pycache__/
+*.pyc
+
+# Arquivos gerados
+output/
+
+# Logs
+logs/
+
+# VS Code
+.vscode/
+
+# Arquivos Office temporários
+~$*.xlsx
