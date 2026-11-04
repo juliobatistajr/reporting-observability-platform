@@ -1,9 +1,7 @@
+from pathlib import Path
+
+TEMPLATE_PATH = Path(__file__).resolve().parent.parent / "templates" / "email_template.html"
+
+
 def carregar_template():
-
-    with open(
-        "templates/email_template.html",
-        "r",
-        encoding="utf-8"
-    ) as arquivo:
-
-        return arquivo.read()
+    return TEMPLATE_PATH.read_text(encoding="utf-8")

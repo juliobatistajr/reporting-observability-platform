@@ -22,3 +22,7 @@ logs/
 
 # Arquivos Office temporários
 ~$*.xlsx
+# Arquivos locais de demonstração e configuração
+config/*.xlsx
+output/*.html
+*.log

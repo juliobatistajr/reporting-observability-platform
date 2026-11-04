@@ -1,3 +1,4 @@
+import os
 import pandas as pd
 
 from banco import conectar
@@ -12,9 +13,11 @@ def obter_internados():
 
     cursor = conexao.cursor()
 
-    cursor.execute("""
-        ALTER SESSION SET CURRENT_SCHEMA = TASY
-    """)
+    schema = os.getenv("ORACLE_SCHEMA")
+    if schema:
+        if not schema.replace("_", "").isalnum() or not schema[0].isalpha():
+            raise ValueError("ORACLE_SCHEMA inválido")
+        cursor.execute(f"ALTER SESSION SET CURRENT_SCHEMA = {schema.upper()}")
 
     df = pd.read_sql(
         sql,
@@ -34,9 +37,11 @@ def obter_altas():
 
     cursor = conexao.cursor()
 
-    cursor.execute("""
-        ALTER SESSION SET CURRENT_SCHEMA = TASY
-    """)
+    schema = os.getenv("ORACLE_SCHEMA")
+    if schema:
+        if not schema.replace("_", "").isalnum() or not schema[0].isalpha():
+            raise ValueError("ORACLE_SCHEMA inválido")
+        cursor.execute(f"ALTER SESSION SET CURRENT_SCHEMA = {schema.upper()}")
 
     df = pd.read_sql(
         sql,
