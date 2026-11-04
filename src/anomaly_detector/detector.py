@@ -1,4 +1,7 @@
-from historico import carregar_historico
+try:
+    from .historico import carregar_historico
+except ImportError:
+    from historico import carregar_historico
 
 
 historico = carregar_historico()
