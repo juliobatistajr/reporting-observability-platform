@@ -1,6 +1,9 @@
 from datetime import datetime
 
-from html_service import carregar_template
+try:
+    from .html_service import carregar_template
+except ImportError:
+    from html_service import carregar_template
 
 
 def gerar_html_convenio(
@@ -105,7 +108,7 @@ def gerar_html_convenio(
 
     html = html.replace(
         "{{CONVENIO}}",
-        convenio
+        str(convenio)
     )
 
     html = html.replace(
