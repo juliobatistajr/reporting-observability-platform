@@ -1,7 +1,7 @@
 import pandas as pd
 from pathlib import Path
 
-ARQUIVO_EXCEL = r"config\CONVENIOS_EMAIL.xlsx"
+ARQUIVO_EXCEL = Path(__file__).resolve().parent.parent / "config" / "CONVENIOS_EMAIL.xlsx"
 
 
 def carregar_parametros():
