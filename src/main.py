@@ -173,7 +173,7 @@ try:
 
         status_execucao = "SUCESSO_PARCIAL"
 
-    elif total_grupos == 0 and total_erros > 0:
+    elif total_grupos == 0:
 
         status_execucao = "FALHA"
 
