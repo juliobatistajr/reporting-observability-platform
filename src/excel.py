@@ -1,4 +1,5 @@
 import pandas as pd
+from pathlib import Path
 
 ARQUIVO_EXCEL = r"config\CONVENIOS_EMAIL.xlsx"
 
